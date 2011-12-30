@@ -3,6 +3,7 @@ module Test.QuickCheck.Tsuraan
 , randBS'
 , randLBS
 , randLBS'
+, randLBS''
 ) where
 
 import qualified Data.ByteString.Lazy as LazyByteString
@@ -35,7 +36,10 @@ randLBS min max = do
   randLBS' len
 
 randLBS' :: Int -> Gen LazyByteString
-randLBS' len = do
+randLBS' = randLBS'' 1
+
+randLBS'' :: Int -> Int -> Gen LazyByteString
+randLBS'' min len = do
   chunks <- mkChunks len []
   return $ LazyByteString.fromChunks chunks
   where
