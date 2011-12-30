@@ -45,5 +45,8 @@ randLBS' len = do
     mkChunks (n-l) (bs:acc)
 
 instance Arbitrary ByteString where
-  arbitrary = randBS 1 100
+  arbitrary = randBS 1 1000
+
+instance Arbitrary LazyByteString.ByteString where
+  arbitrary = randLBS 1 1000
 
