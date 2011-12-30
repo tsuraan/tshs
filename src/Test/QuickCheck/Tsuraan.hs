@@ -1,6 +1,8 @@
 module Test.QuickCheck.Tsuraan
 ( randBS
 , randBS'
+, randLBS
+, randLBS'
 ) where
 
 import qualified Data.ByteString.Lazy as LazyByteString
