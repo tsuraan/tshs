@@ -1,0 +1,19 @@
+Name:           tshs
+Version:        0.0.0
+Description:    Tsuraan's Extras
+License:        PublicDomain
+License-file:   LICENSE
+Author:         Jeremy Groven
+Maintainer:     Jeremy Groven
+Build-Type:     Simple
+Cabal-Version:  >=1.2
+
+Library
+  Ghc-Options:    -threaded -O2
+  Build-Depends: base
+               , bytestring
+               , QuickCheck
+  hs-source-dirs: src
+  Exposed-modules: Test.QuickCheck.Tsuraan
+
+
