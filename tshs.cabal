@@ -13,6 +13,7 @@ Library
   Build-Depends: base
                , bytestring
                , QuickCheck
+               , cryptohash
   hs-source-dirs: src
   Exposed-modules: Test.QuickCheck.Tsuraan
 

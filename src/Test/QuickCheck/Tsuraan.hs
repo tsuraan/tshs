@@ -4,8 +4,10 @@ module Test.QuickCheck.Tsuraan
 , randLBS
 , randLBS'
 , randLBS''
+, gen
 ) where
 
+import qualified Crypto.Hash.Tiger as Tiger
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.ByteString as ByteString
 import           Data.ByteString ( ByteString )
@@ -24,11 +26,10 @@ randBS' len = do
   if substring
     then do
       offset <- choose (1, 1000)
-      bytes <- sequence $ replicate (len+offset) arbitrary
-      return $ ByteString.drop offset $ ByteString.pack bytes
-    else do
-      bytes <- sequence $ replicate len arbitrary
-      return $ ByteString.pack bytes
+      bytes <- gen (len+offset)
+      return $ ByteString.drop offset bytes
+    else
+      gen len
 
 randLBS :: Int -> Int -> Gen LazyByteString
 randLBS min max = do
@@ -55,4 +56,13 @@ instance Arbitrary ByteString where
 
 instance Arbitrary LazyByteString.ByteString where
   arbitrary = randLBS 1 1000
+
+gen :: Int -> Gen ByteString
+gen 0 = return ByteString.empty
+gen num = do
+  words <- sequence $ replicate 24 arbitrary
+  let init = ByteString.pack words
+  let chunks = iterate Tiger.hash init
+  let needed = 1 + div (num-1) 24
+  return $ ByteString.take num $ ByteString.concat $ take needed chunks
 
